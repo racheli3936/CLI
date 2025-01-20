@@ -21,7 +21,7 @@ static void PassOnFiles(string path, string[] lang, string sort, bool note, stri
     Sort(files, sort);
     if (author != null)
     {
-        File.WriteAllLines(path, ["//author:" + author]);
+        File.WriteAllLines(path, ["//author: " + author]);
 
     }
     foreach (string file in files)
@@ -31,7 +31,7 @@ static void PassOnFiles(string path, string[] lang, string sort, bool note, stri
             if (note == true)
             {
 
-                File.AppendAllLines(path, ["//source:" + file]);
+                File.AppendAllLines(path, ["//source: " + file]);
             }
             if (remove == true)
             {
@@ -72,12 +72,12 @@ static void CreateRsp()
     string command = "bundle";
     try
     {
-        Console.WriteLine("enter the languages you want, to exit enter -1?");
+        Console.WriteLine("enter the first languages you want?");
         lang = Console.ReadLine();
         while (lang != "-1")
         {
             command += " -l" + lang;
-            Console.WriteLine("enter the languages you want, to exit enter -1?");
+            Console.WriteLine("if you want more languages enter, to exit enter -1?");
             lang = Console.ReadLine();
         }
         Console.WriteLine("enter the path to create your bundle, if you don't want enter -1");
@@ -92,11 +92,11 @@ static void CreateRsp()
         remove = bool.Parse(Console.ReadLine());
      
         if (output == "-1") { output = Path.Combine(Directory.GetCurrentDirectory(), "bundle.txt"); }
-        command += $" -o {output}";
+        command += $" -o \"{output}\"";
         if (sort == 'T') { command += " -s type"; } else { command += " -s name"; }
         if (note) { command += " -n"; }
         if (remove) { command += " -r"; }
-        if (author != "-1") { command += $" -a {author}"; }
+        if (author != "-1") { command += $" -a \"{author}\""; }
         string fileName = "response.rsp";
         File.WriteAllText(fileName, command);
         Console.WriteLine("now enter: fib @response.rsp");
@@ -107,7 +107,7 @@ static void CreateRsp()
     }
 }
 var bundleLanguage = new Option<string[]>("--languages", "choose languages") { IsRequired = true };
-bundleLanguage.FromAmong(".txt", ".java", ".c#", ".cpp", ".py", ".js", ".html", ".css", ".pdf", ".jpg", "all");
+bundleLanguage.FromAmong(".txt", ".java", ".cs", ".cpp", ".py", ".js", ".html", ".css", ".pdf", ".jpg", "all");
 bundleLanguage.AddAlias("-l");
 var bundleOption = new Option<FileInfo>("--output", "file path and name");
 bundleOption.AddAlias("-o");
