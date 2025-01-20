@@ -1,4 +1,4 @@
-﻿////fib bundle --output path
+﻿
 using System.CommandLine;
 using System.IO;
 using System;
@@ -12,7 +12,6 @@ static void PassOnFiles(string path, string[] lang, string sort, bool note, stri
     string currentDirectory = Directory.GetCurrentDirectory();
     if (!Directory.Exists(Path.GetDirectoryName(path)))
     {
-        //path = currentDirectory + "\\bundle.txt";
         Console.WriteLine("Error: the path is not exists");
     }
     string[] excludedDirectories = { "bin", "debug", "obj", "release", "logs", "temp", "dist", "node_modules", "vendor", ".vs" };
